@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import cartIcon from "../assets/shopping-cart.png";
 
 const Navbar = () => {
@@ -32,9 +32,9 @@ const Navbar = () => {
                   HOME
                 </li>
               </NavLink>
-              <NavLink to="/availale">
+              <NavLink to="/products">
                 <li className="hover:scale-105 transition duration-700 ease-in  ">
-                  PRODUCT
+                  PRODUCTS
                 </li>
               </NavLink>
               <NavLink to="/addFoods">
@@ -57,10 +57,10 @@ const Navbar = () => {
             <NavLink to="/">
               <li className="  ">HOME</li>
             </NavLink>
-            <NavLink to="/availale">
+            <NavLink to="/products">
               <li className=" ">PRODUCT</li>
             </NavLink>
-            <NavLink to="/addFoods">
+            <NavLink to="/productMgt">
               <li className=" ">PRODUCT MGT</li>
             </NavLink>
             <NavLink to="/myFoods">
@@ -69,7 +69,9 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end hidden lg:flex">
-          <img className="w-[30px]  mr-4" src={cartIcon} alt="" />
+          <Link to="/cart">
+            <img className="w-[30px]  mr-4" src={cartIcon} alt="" />
+          </Link>
           <button className="bg-[#f7a695] text-white px-8 py-2 rounded-full">
             Shop Now
           </button>

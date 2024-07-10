@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import Card from "./Card";
-import { Button } from "./ui/button";
+import Card from "../../components/Card";
+import { Button } from "../../components/ui/button";
 const FeaturedProducts = () => {
   return (
     <section className="bg-[#edf3f5] mt-10 py-12 ">

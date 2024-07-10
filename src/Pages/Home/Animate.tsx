@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import video from "../assets/vedio.mp4";
+import video from "../../assets/vedio.mp4";
 
 function WhoWeAre() {
   return (

@@ -1,8 +1,8 @@
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 
 const Categories = () => {
   return (
-    <section className="bg-white py-12 mt-8 max-w-[1280px] mx-auto">
+    <section className="bg-white py-12  max-w-[1280px] mx-auto">
       <div className="container mx-auto text-center">
         <h2 className="text-2xl lg:text-3xl font-bold mb-12">Categories</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">

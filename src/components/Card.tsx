@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const Card = () => {
   return (
     <div className="bg-white p-6 rounded-2xl shadow-lg max-w-sm hover:scale-105 transition duration-700 ease-in">
@@ -36,9 +38,11 @@ const Card = () => {
         </div>
         <div className="mt-4 flex justify-between items-center">
           <span className="text-xl font-bold text-gray-800">$339</span>
-          <button className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition duration-300">
-            Add to cart
-          </button>
+          <Link to={"/details"}>
+            <button className="bg-green-500 text-white px-4 py-2 rounded-lg shadow hover:bg-green-600 transition duration-300">
+              Add to cart
+            </button>
+          </Link>
         </div>
       </div>
     </div>

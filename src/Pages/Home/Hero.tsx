@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
-import "swiper/css";
-import "swiper/css/pagination";
 
-import baner1 from "../assets/baner2.jpg";
+import baner1 from "../../assets/baner2.jpg";
 
 const Hero = () => {
   return (
@@ -74,21 +72,6 @@ const Hero = () => {
         className="flex-1 relative z-20 "
       >
         <div className="h-[71%] hidden md:block ">
-          {/* <Swiper
-            autoplay={{
-              delay: 2000,
-              disableOnInteraction: false,
-            }}
-            modules={[Autoplay]}
-            className="w-[200px] md:w-[400px] sm:w-[300px] lg:w-[600px] "
-          >
-            <SwiperSlide>
-             
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={baner2} alt="" className="w-full h-full object-cover" />
-            </SwiperSlide>
-          </Swiper> */}
           <img src={baner1} alt="" className="w-full h-full object-cover" />
         </div>
       </motion.div>

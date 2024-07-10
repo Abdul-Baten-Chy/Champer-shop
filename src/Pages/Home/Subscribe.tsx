@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { Button } from "../../components/ui/button";
 
 const Subscribe = () => {
   const img = "https://i.ibb.co/56pT30v/imgCard7.jpg";
