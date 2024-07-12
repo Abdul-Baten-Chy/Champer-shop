@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import Hero from "./products/Hero";
 
 function ProductMgt() {
@@ -39,7 +40,9 @@ function ProductMgt() {
                 </span>
               </td>
               <td>
-                <Button className="bg-[#4a869e] px-6">Add</Button>
+                <Link to="/addProduct">
+                  <Button className="bg-[#4a869e] px-6">Add</Button>
+                </Link>
               </td>
               <td>
                 <Button className="bg-[#4a869e] px-6">Edite</Button>
