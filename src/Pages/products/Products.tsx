@@ -1,9 +1,15 @@
-import Card from "@/components/Card";
+import Cards from "@/components/Cards";
 import Filter from "@/components/Filter";
 import SearchBar from "@/components/SearchBar";
+import { useGetAllProductQuery } from "@/redux/Feature/Api/productApi";
+import { Tproduct } from "@/Utills/type";
 import Hero from "./Hero";
 
 function Products() {
+  const { data, isLoading, isError } = useGetAllProductQuery(undefined);
+  console.log(data);
+  if (isLoading) return <h2>Loading ...</h2>;
+  if (isError) return <h2>Something went wrong</h2>;
   return (
     <div className="max-w-[1280px] mx-auto">
       <Hero></Hero>
@@ -13,13 +19,10 @@ function Products() {
         <Filter></Filter>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-12">
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
-        <Card></Card>
+        {data &&
+          data?.data?.map((item: Tproduct) => (
+            <Cards key={item._id} product={item}></Cards>
+          ))}
       </div>
     </div>
   );

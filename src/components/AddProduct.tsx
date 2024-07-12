@@ -1,7 +1,13 @@
+import { useCreateProductMutation } from "@/redux/Feature/Api/productApi";
+import axios from "axios";
+import Swal from "sweetalert2";
 const image_hosting_key = import.meta.env.VITE_API_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const AddProducts = () => {
+  // const [products, setProduct] = useState({});
+  const [createProduct, { isLoading }] = useCreateProductMutation();
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -11,62 +17,60 @@ const AddProducts = () => {
 
     const quantity = form.quantity.value;
     const sizeInput = form.size.value;
-    const sizes = sizeInput.split(",").map((size: string) => size.trim());
+    const sizes = sizeInput ? sizeInput.split(",") : [];
     const category = form.category.value;
     const price = form.price.value;
     const description = form.description.value;
     const rating = form.rating.value;
     const brand = form.brand.value;
-    const featured = form.featured.value;
-
+    const isFeatured = form.featured.value === "true";
     const imageUrls = await Promise.all(
       images.map(async (image) => {
         const formData = new FormData();
         formData.append("image", image);
 
-        const response = await fetch(image_hosting_api, {
-          method: "POST",
-          body: formData,
+        const response = await axios.post(image_hosting_api, formData, {
           headers: {
-            Accept: "application/json",
+            "content-type": "multipart/form-data",
           },
         });
 
-        if (!response.ok) {
+        if (!response) {
           throw new Error("Image upload failed");
         }
 
-        const data = await response.json();
-        return data.data.url;
+        return response.data.data.url;
       })
     );
 
     const product = {
       name,
       images: imageUrls,
-      quantity,
+      quantity: Number(quantity),
       sizes,
       category,
-      price,
+      price: Number(price),
       description,
-      rating,
+      rating: Number(rating),
       brand,
-      featured,
+      isFeatured,
     };
-    // mutation.mutate(newFood);
-    console.log(product);
+    const res = await createProduct(product);
+    console.log(res?.data);
 
-    // form.reset();
+    if (res?.data?.success) {
+      // show success popup
+      form.reset();
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: res?.data.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
-  // if (mutation.isSuccess) {
-  //   Swal.fire({
-  //     position: "top-end",
-  //     icon: "success",
-  //     title: "product has been added",
-  //     showConfirmButton: false,
-  //     timer: 1500,
-  //   });
-  // }
+  if (isLoading) <h2>Loading...</h2>;
   return (
     <div className="pt-16 min-h-[100vh-64px]">
       <div className="hero min-h-[100vh-64px] pt-14   bg-base-200">

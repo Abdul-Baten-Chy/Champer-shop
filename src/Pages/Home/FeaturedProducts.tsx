@@ -1,7 +1,13 @@
 import { motion } from "framer-motion";
-import Card from "../../components/Card";
+
+import Cards from "@/components/Cards";
+import { useGetAllProductQuery } from "@/redux/Feature/Api/productApi";
 import { Button } from "../../components/ui/button";
 const FeaturedProducts = () => {
+  const { data, isLoading, isError } = useGetAllProductQuery(undefine);
+  const products = data?.data;
+  if (isLoading) return <h2> Loading...</h2>;
+  if (isError) return <h2> Something went wrong...</h2>;
   return (
     <section className="bg-[#edf3f5] mt-10 py-12 ">
       <motion.div
@@ -22,10 +28,10 @@ const FeaturedProducts = () => {
           Unique & modern pottery made by our finest artisans.
         </p>
         <div className="grid mx-auto justify-center grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
+          {products.map((product) => (
+            <Cards key={product._id} product={product}></Cards>
+          ))}
+          <Cards></Cards>
         </div>
         <Button className="mt-10 mx-10 bg-[#F26B4E]">See More</Button>
       </motion.div>
