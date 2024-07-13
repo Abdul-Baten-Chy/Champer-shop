@@ -11,3 +11,10 @@ export type Tproduct = {
   images: string[];
   isFeatured: boolean;
 };
+
+export type Tresult = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: Tproduct[];
+};

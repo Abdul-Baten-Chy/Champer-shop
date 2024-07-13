@@ -7,7 +7,6 @@ import Hero from "./Hero";
 
 function Products() {
   const { data, isLoading, isError } = useGetAllProductQuery(undefined);
-  console.log(data);
   if (isLoading) return <h2>Loading ...</h2>;
   if (isError) return <h2>Something went wrong</h2>;
   return (

@@ -1,4 +1,4 @@
-import { Tproduct } from "@/Utills/type";
+import { Tproduct, Tresult } from "@/Utills/type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productApi = createApi({
@@ -6,7 +6,7 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),
   tagTypes: ["products", "product"],
   endpoints: (builder) => ({
-    createProduct: builder.mutation<string, Partial<Tproduct>>({
+    createProduct: builder.mutation<Tresult, Partial<Tproduct>>({
       query: (data) => ({
         url: "/products",
         method: "POST",
@@ -21,12 +21,19 @@ export const productApi = createApi({
       }),
       providesTags: ["product"],
     }),
-    getAllProduct: builder.query<string, Partial<Tproduct>>({
+    getAllProduct: builder.query<Tresult, void>({
       query: () => ({
         url: "/products",
         method: "GET",
       }),
       providesTags: ["products"],
+    }),
+    deleteProduct: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `/products/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["products"],
     }),
   }),
 });
@@ -37,4 +44,5 @@ export const {
   useCreateProductMutation,
   useGetAllProductQuery,
   useGetSingleProductQuery,
+  useDeleteProductMutation,
 } = productApi;
