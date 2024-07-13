@@ -1,4 +1,5 @@
-import { Tproduct } from "@/Utills/type";
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+import { TexistingItem, Tproduct } from "@/Utills/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const cartSlice = createSlice({
@@ -6,13 +7,13 @@ export const cartSlice = createSlice({
   initialState: { cart: [] },
   reducers: {
     addtoCart: (state, action: PayloadAction<Tproduct>) => {
-      const existingItem = state.cart.find(
-        (item) => item._id === action.payload._id
+      const existingItem: TexistingItem = state?.cart?.find(
+        (item: Tproduct) => item._id === action.payload._id
       );
       if (existingItem) {
         existingItem.userQuantity! += 1;
       } else {
-        state.cart.push({ ...action.payload, userQuantity: 1 });
+        state.cart.push({ ...action?.payload, userQuantity: 1 });
       }
     },
     removeItem: (state, action: PayloadAction<Tproduct>) => {
@@ -20,25 +21,29 @@ export const cartSlice = createSlice({
     },
     decreaseItemQuantity: (state, action: PayloadAction<string>) => {
       const existingItem = state.cart.find(
-        (item) => item._id === action.payload
+        (item: Tproduct) => item?._id === action?.payload
       );
       if (existingItem) {
-        if (existingItem.userQuantity! > 1) {
+        if (existingItem?.userQuantity! > 1) {
           existingItem.userQuantity!--;
         } else {
-          state.cart = state.cart.filter((item) => item._id !== action.payload);
+          state.cart = state.cart.filter(
+            (item) => item?._id !== action?.payload
+          );
         }
       }
     },
     increaseItemQuantity: (state, action: PayloadAction<string>) => {
       const existingItem = state.cart.find(
-        (item) => item._id === action.payload
+        (item) => item?._id === action?.payload
       );
       if (existingItem) {
-        if (existingItem.userQuantity! >= 0) {
+        if (existingItem?.userQuantity! >= 0) {
           existingItem.userQuantity!++;
         } else {
-          state.cart = state.cart.filter((item) => item._id !== action.payload);
+          state.cart = state?.cart?.filter(
+            (item) => item?._id !== action?.payload
+          );
         }
       }
     },

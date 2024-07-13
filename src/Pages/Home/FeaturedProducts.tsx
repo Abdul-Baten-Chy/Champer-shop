@@ -5,7 +5,7 @@ import { useGetAllProductQuery } from "@/redux/Feature/Api/productApi";
 import { Tproduct } from "@/Utills/type";
 import { Button } from "../../components/ui/button";
 const FeaturedProducts = () => {
-  const { data, isLoading, isError } = useGetAllProductQuery(undefined);
+  const { data, isLoading, isError } = useGetAllProductQuery("");
   const products = data?.data
     ?.filter((item) => item.isFeatured == true)
     .slice(0, 4);
@@ -31,7 +31,7 @@ const FeaturedProducts = () => {
           Unique & modern pottery made by our finest artisans.
         </p>
         <div className="grid mx-auto justify-center grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
-          {products.map((product: Tproduct) => (
+          {products?.map((product: Tproduct) => (
             <Cards key={product._id} product={product}></Cards>
           ))}
         </div>

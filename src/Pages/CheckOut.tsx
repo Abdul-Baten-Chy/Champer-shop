@@ -1,14 +1,18 @@
 import { useCreateCartMutation } from "@/redux/Feature/Api/productApi";
+import { newObj, TuserDetails } from "@/Utills/type";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
+import { CartItem, RootState } from "./Cart";
 
 function CheckOut() {
-  const cartData = useSelector((state) => state.cart.cart);
+  const cartData = useSelector((state: RootState) => state?.cart?.cart);
   const [createCart, { isLoading, isError }] = useCreateCartMutation();
   console.log(cartData);
 
-  const soldProduct = cartData.map((item) => {
-    const newObj = {};
+  if (isLoading) return <h2>Loading</h2>;
+  if (isError) return <h2>somthing went wrong</h2>;
+  const soldProduct = cartData.map((item: CartItem) => {
+    const newObj: newObj = {};
     newObj.id = item._id;
     newObj.productName = item.name;
     newObj.quantity = item.userQuantity;
@@ -20,7 +24,7 @@ function CheckOut() {
     (acc, current) => acc + current.subTotal,
     0
   );
-  let userDetails = {};
+  let userDetails: TuserDetails = {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -37,7 +41,7 @@ function CheckOut() {
       Swal.fire({
         position: "top-end",
         icon: "success",
-        title: result?.data.message,
+        title: result?.data?.message,
         showConfirmButton: false,
         timer: 1500,
       });
@@ -60,14 +64,14 @@ function CheckOut() {
           <tbody>
             {soldProduct &&
               soldProduct.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.productName}</td>
-                  <td>{item.quantity}</td>
+                <tr key={item?.id}>
+                  <td>{item?.productName}</td>
+                  <td>{item?.quantity}</td>
                   <td>
-                    <span>{item.price}</span>
+                    <span>{item?.price}</span>
                   </td>
                   <td>
-                    <span>{item.subTotal}</span>
+                    <span>{item?.subTotal}</span>
                   </td>
                 </tr>
               ))}

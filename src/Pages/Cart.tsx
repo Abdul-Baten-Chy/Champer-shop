@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   decreaseItemQuantity,
@@ -8,14 +9,30 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+export interface CartItem {
+  _id: string;
+  name: string;
+  userQuantity: number;
+  price: number;
+}
+
+export interface CartState {
+  cart: CartItem[];
+}
+
+export interface RootState {
+  cart: CartState;
+}
+
 function Cart() {
-  const result = useSelector((state) => state.cart.cart);
-  const totalPrice = result.reduce(
-    (acc, data) => acc + data.price * data.userQuantity,
+  const result = useSelector((state: RootState) => state?.cart?.cart);
+  const totalPrice = result?.reduce(
+    (acc: any, data: any) => acc + data?.price * data?.userQuantity,
     0
   );
-  const totalquantity = result.reduce(
-    (acc, data) => acc + data.userQuantity,
+  const totalquantity = result?.reduce(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (acc: any, data: any) => acc + data?.userQuantity,
     0
   );
 
@@ -53,7 +70,8 @@ function Cart() {
           </thead>
           <tbody>
             {result &&
-              result.map((item) => (
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              result.map((item: any) => (
                 <tr key={item._id}>
                   <td>
                     {item?.name}

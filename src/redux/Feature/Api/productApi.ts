@@ -1,9 +1,18 @@
-import { Tproduct, TqueryObj, Tresult, TresultSingle } from "@/Utills/type";
+import {
+  Tproduct,
+  TqueryObj,
+  TqueryParam,
+  Tresult,
+  TresultSingle,
+} from "@/Utills/type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productApi = createApi({
   reducerPath: "productApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api/v1" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl:
+      "https://champer-gnbkzawy2-abdu-baten-chys-projects.vercel.app/api/v1",
+  }),
   tagTypes: ["products", "product"],
   endpoints: (builder) => ({
     createProduct: builder.mutation<Tresult, Partial<Tproduct>>({
@@ -29,17 +38,11 @@ export const productApi = createApi({
       }),
       providesTags: ["product"],
     }),
-    // getAllProduct: builder.query<Tresult, string>({
-    //   query: (search) => ({
-    //     url: `/products?searchTerm=${search}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["products"],
-    // }),
+
     getAllProduct: builder.query<Tresult, string>({
       query: (search) => {
         const url = "/products";
-        const queryParams = {};
+        const queryParams: TqueryParam = {};
 
         if (search) {
           queryParams.searchTerm = search;

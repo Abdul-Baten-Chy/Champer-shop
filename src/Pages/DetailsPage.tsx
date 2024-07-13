@@ -10,10 +10,10 @@ const DetailsPage = () => {
   const dispatch = useDispatch();
 
   const { id } = useParams<{ id: string }>();
-  const { data, isLoading, isError } = useGetSingleProductQuery(id);
+  const { data, isLoading, isError } = useGetSingleProductQuery(id as string);
   if (isLoading) return <h2> Loading...</h2>;
   if (isError) return <h2> Something went wrong...</h2>;
-  const ratings = new Array(Math.floor(data?.data?.rating)).fill(
+  const ratings = new Array(Math.floor(data?.data?.rating as number)).fill(
     data?.data?.rating
   );
   const handleThumbnailClick = (image: string) => {
@@ -31,7 +31,7 @@ const DetailsPage = () => {
             />
             <div className="flex space-x-2 mt-4">
               {/* Thumbnails */}
-              {data?.data?.images?.length > 1 &&
+              {data!.data!.images!.length > 1 &&
                 data?.data?.images?.map((item) => (
                   <img
                     key={item}

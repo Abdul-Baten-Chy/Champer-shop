@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/prop-types */
 
 import { Link } from "react-router-dom";
@@ -31,7 +32,7 @@ const Cards = ({ product }) => {
             <div className="">Category: {product.category}</div>
             <h3 className="text-[#4F46E5]  text-[18px] flex gap-2">
               Sizes:{" "}
-              {product?.sizes?.map((item) => (
+              {product?.sizes?.map((item: any) => (
                 <h2>{item}</h2>
               ))}
             </h3>

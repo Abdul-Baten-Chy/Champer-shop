@@ -196,11 +196,7 @@ const UpdateProduct = () => {
               <label className="label" htmlFor="isFeatured">
                 <span className="label-text">Featured</span>
               </label>
-              <select
-                name="featured"
-                id="isFeatured"
-                defaultValue={product?.isFeatured}
-              >
+              <select name="featured" id="isFeatured">
                 <option value="true">True</option>
                 <option value="false">False</option>
               </select>

@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import Hero from "./products/Hero";
 
 function ProductMgt() {
-  const { data, isLoading, isError } = useGetAllProductQuery(undefined);
+  const { data, isLoading, isError } = useGetAllProductQuery("");
   const [deleteProduct] = useDeleteProductMutation();
 
   if (isLoading) return <h2>Loading ...</h2>;
