@@ -1,4 +1,4 @@
-import { Tproduct, Tresult } from "@/Utills/type";
+import { Tproduct, TqueryObj, Tresult, TresultSingle } from "@/Utills/type";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const productApi = createApi({
@@ -14,16 +14,51 @@ export const productApi = createApi({
       }),
       invalidatesTags: ["products"],
     }),
-    getSingleProduct: builder.query<Tproduct, string>({
+    editProduct: builder.mutation<Tresult, Partial<TresultSingle>>({
+      query: ({ id, data }) => ({
+        url: `/products/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["products", "product"],
+    }),
+    getSingleProduct: builder.query<TresultSingle, string>({
       query: (id) => ({
         url: `/products/${id}`,
         method: "GET",
       }),
       providesTags: ["product"],
     }),
-    getAllProduct: builder.query<Tresult, void>({
-      query: () => ({
-        url: "/products",
+    // getAllProduct: builder.query<Tresult, string>({
+    //   query: (search) => ({
+    //     url: `/products?searchTerm=${search}`,
+    //     method: "GET",
+    //   }),
+    //   providesTags: ["products"],
+    // }),
+    getAllProduct: builder.query<Tresult, string>({
+      query: (search) => {
+        const url = "/products";
+        const queryParams = {};
+
+        if (search) {
+          queryParams.searchTerm = search;
+        }
+
+        // Construct the query string
+        const queryString = new URLSearchParams(queryParams).toString();
+
+        return {
+          url: `${url}${queryString ? `?${queryString}` : ""}`,
+          method: "GET",
+        };
+      },
+
+      providesTags: ["products"],
+    }),
+    getFilteredProduct: builder.query<Tresult, TqueryObj>({
+      query: (searcQuery) => ({
+        url: `/products/filtered?category=${searcQuery.category}&minPrice=${searcQuery.minPrice}&maxPrice=${searcQuery.maxPrice}`,
         method: "GET",
       }),
       providesTags: ["products"],
@@ -35,14 +70,24 @@ export const productApi = createApi({
       }),
       invalidatesTags: ["products"],
     }),
+    createCart: builder.mutation<Tresult, Partial<Tproduct>>({
+      query: (data) => ({
+        url: "/cart",
+        method: "POST",
+        body: data,
+      }),
+
+      invalidatesTags: ["products"],
+    }),
   }),
 });
 
-// Export hooks for usage in functional components, which are
-// auto-generated based on the defined endpoints
 export const {
   useCreateProductMutation,
   useGetAllProductQuery,
   useGetSingleProductQuery,
   useDeleteProductMutation,
+  useEditProductMutation,
+  useGetFilteredProductQuery,
+  useCreateCartMutation,
 } = productApi;

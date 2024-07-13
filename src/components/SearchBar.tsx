@@ -1,8 +1,26 @@
-function SearchBar() {
+import debounce from "lodash/debounce";
+import { useEffect } from "react";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function SearchBar({ setSearchTerm }: any) {
+  const debouncedSearchTerm = debounce((value: string) => {
+    setSearchTerm(value);
+  }, 700);
+
+  useEffect(() => {
+    return () => {
+      debouncedSearchTerm.cancel();
+    };
+  }, [debouncedSearchTerm]);
   return (
     <>
       <label className="input input-bordered flex items-center gap-2 max-w-[300px]">
-        <input type="text" className="grow" placeholder="Search" />
+        <input
+          type="text"
+          className="grow"
+          placeholder="Search"
+          onChange={(e) => debouncedSearchTerm(e.target.value)}
+        />
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 16 16"

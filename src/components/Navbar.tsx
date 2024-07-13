@@ -1,7 +1,11 @@
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import cartIcon from "../assets/shopping-cart.png";
 
 const Navbar = () => {
+  const data = useSelector((state) => state.cart.cart);
+  console.log(data);
+
   return (
     <nav className="w-full ">
       <div className="navbar  max-w-[1280px]  mx-auto px-8">
@@ -69,9 +73,14 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="navbar-end hidden lg:flex">
-          <Link to="/cart">
-            <img className="w-[30px]  mr-4" src={cartIcon} alt="" />
-          </Link>
+          <div className="relative">
+            <Link to="/cart">
+              <img className="w-[30px]  mr-4" src={cartIcon} alt="" />
+            </Link>
+            <h2 className="absolute text-bold text-black font-[24px] top-1/2 left-1/2  transform -translate-x-[60%] -translate-y-[90%]">
+              {data.length}
+            </h2>
+          </div>
           <button className="bg-[#f7a695] text-white px-8 py-2 rounded-full">
             Shop Now
           </button>

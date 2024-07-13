@@ -11,10 +11,11 @@ import Hero from "./products/Hero";
 function ProductMgt() {
   const { data, isLoading, isError } = useGetAllProductQuery(undefined);
   const [deleteProduct] = useDeleteProductMutation();
-  const product = data?.data;
+
   if (isLoading) return <h2>Loading ...</h2>;
   if (isError) return <h2>Something went wrong</h2>;
-
+  const product = data?.data;
+  console.log(product);
   const handleDelete = async (id: string) => {
     const result = await Swal.fire({
       title: "Are you sure?",
@@ -79,7 +80,9 @@ function ProductMgt() {
                     </Link>
                   </td>
                   <td>
-                    <Button className="bg-[#4a869e] px-6">Edit</Button>
+                    <Link to={`/edit/${item._id}`}>
+                      <Button className="bg-[#4a869e] px-6">Edit</Button>
+                    </Link>
                   </td>
                   <th>
                     <Button

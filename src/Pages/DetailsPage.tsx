@@ -1,10 +1,13 @@
 import { useGetSingleProductQuery } from "@/redux/Feature/Api/productApi";
+import { addtoCart } from "@/redux/Feature/productSlice";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const DetailsPage = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
+  const dispatch = useDispatch();
 
   const { id } = useParams<{ id: string }>();
   const { data, isLoading, isError } = useGetSingleProductQuery(id);
@@ -28,9 +31,10 @@ const DetailsPage = () => {
             />
             <div className="flex space-x-2 mt-4">
               {/* Thumbnails */}
-              {data?.data?.images.length > 1 &&
-                data?.data?.images.map((item) => (
+              {data?.data?.images?.length > 1 &&
+                data?.data?.images?.map((item) => (
                   <img
+                    key={item}
                     src={item}
                     alt="Reebok Zig Kinetica 3"
                     className="w-16 h-16 rounded-lg cursor-pointer"
@@ -44,8 +48,8 @@ const DetailsPage = () => {
             <p className="text-gray-500 mb-4">By {data?.data?.brand}</p>
             <div className="flex items-center mb-4">
               <span className="text-yellow-500">
-                {ratings.map((item) => (
-                  <span>★</span>
+                {ratings.map((_, index) => (
+                  <span key={index}>★</span>
                 ))}
               </span>
               <span className="ml-2 text-gray-500">(42 reviews)</span>
@@ -62,7 +66,7 @@ const DetailsPage = () => {
             <div className="mb-4">
               <h3 className="text-lg font-semibold mb-2">Size</h3>
               <div className="grid grid-cols-4 gap-2">
-                {data?.data?.sizes.map((size) => (
+                {data?.data?.sizes?.map((size) => (
                   <button
                     key={size}
                     className={`border border-gray-300 rounded-lg p-2 ${
@@ -75,7 +79,10 @@ const DetailsPage = () => {
                 ))}
               </div>
             </div>
-            <button className="w-full bg-black text-white py-3 rounded-lg">
+            <button
+              className="w-full bg-black text-white py-3 rounded-lg"
+              onClick={() => dispatch(addtoCart(data!.data))}
+            >
               Add to cart
             </button>
             <p className="text-gray-500 mt-4">

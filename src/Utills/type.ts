@@ -8,6 +8,7 @@ export type Tproduct = {
   quantity: number;
   description: string;
   brand: string;
+  userQuantity?: number;
   images: string[];
   isFeatured: boolean;
 };
@@ -17,4 +18,16 @@ export type Tresult = {
   statusCode: number;
   message: string;
   data: Tproduct[];
+};
+export type TresultSingle = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: Tproduct;
+};
+export type TqueryObj = {
+  category: string;
+  maxPrice: number;
+  minPrice: number;
+  searchTerm: string;
 };
